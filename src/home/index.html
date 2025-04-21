@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HR System - Информационная система "Кадры"</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .gradient-bg {
+      background: linear-gradient(135deg, #3182ce 0%, #4299e1 100%);
+    }
+    .shadow-card {
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <nav class="bg-white shadow-lg relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16">
+            <div class="flex">
+              <div class="flex-shrink-0 flex items-center" id="fastlink">
+                <span class="font-bold text-xl text-blue-600">HR<span class="text-gray-700">System</span></span>
+              </div>
+              <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                <a href="#" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Главная</a>
+                <a href="../job/list.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Вакансии</a>
+              </div>
+            </div>
+            <div class="hidden sm:ml-6 sm:flex sm:items-center">
+              <div class="ml-3 relative">
+                <a href="../auth/index.html" class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-bold non-authed">Авторизация</a>
+                <button id="profile-btn" class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 authed">
+                  <span class="sr-only">Открыть меню пользователя</span>
+                  <img class="h-8 w-8 rounded-full" src="https://placehold.co/32" alt="Аватар">
+                </button>
+                <div id="profile-menu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
+                     role="menu" aria-orientation="vertical" aria-labelledby="profile-btn">
+                  <a href="../profile/index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 authed" role="menuitem">Ваш профиль</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 authed" role="menuitem" id="logout">Выйти</a>
+                </div>
+              </div>
+            </div>
+            <div class="-mr-2 flex items-center sm:hidden">
+              <button id="menu-btn" class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                <span class="sr-only">Открыть главное меню</span>
+                <!-- Иконки сворачивания/разворачивания -->
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path id="icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                  <path id="icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="sm:hidden hidden">
+          <div class="pt-2 pb-3 space-y-1">
+            <a href="#" class="bg-blue-50 border-blue-500 text-blue-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Главная</a>
+            <a href="../job/list.html" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Вакансии</a>
+          </div>
+          <div class="pt-4 pb-3 border-t border-gray-200">
+            <div class="flex items-center px-4 authed">
+              <img class="h-10 w-10 rounded-full" src="https://placehold.co/40" alt="Аватар">
+              <div class="ml-3">
+                <div class="text-base font-medium text-gray-800">Иван Иванов</div>
+                <div class="text-sm font-medium text-gray-500">ivan@example.com</div>
+              </div>
+            </div>
+            <div class="mt-3 space-y-1">
+              <a href="../profile/index.html" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 authed">Ваш профиль</a>
+              <a href="#" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 authed" id="logout">Выйти</a>
+              <a href="../auth/index.html" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 non-authed">Авторизация</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="gradient-bg py-16">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div class="lg:flex lg:items-center lg:justify-between">
+                  <div class="lg:w-1/2">
+                      <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
+                          Информационная система <span class="block text-blue-200">«Кадры»</span>
+                      </h1>
+                      <p class="mt-3 max-w-md text-lg text-blue-100 sm:text-xl md:mt-5 md:max-w-3xl">
+                          Автоматизация управления персоналом для торговых фирм. Повышайте эффективность и упрощайте HR-процессы.
+                      </p>
+                      <div class="mt-10 sm:flex">
+                          <div class="rounded-md shadow">
+                              <a href="../auth/index.html" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10">
+                                  Войти в систему
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="mt-12 lg:mt-0 lg:w-1/2">
+                      <img class="w-full rounded-lg shadow-xl" src="https://placehold.co/600x400" alt="Иллюстрация HR-системы">
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- О системе -->
+      <div class="py-12 bg-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div class="lg:text-center">
+                  <h2 class="text-base text-blue-600 font-semibold tracking-wide uppercase">О системе</h2>
+                  <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                      Современное управление кадрами
+                  </p>
+                  <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                      Система "Кадры" помогает торговым фирмам оптимизировать HR-процессы и повышать эффективность работы персонала.
+                  </p>
+              </div>
+              <div class="mt-10">
+                  <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+                      <div class="relative">
+                          <dt>
+                              <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                                  <i class="fas fa-users"></i>
+                              </div>
+                              <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Управление персоналом</p>
+                          </dt>
+                          <dd class="mt-2 ml-16 text-base text-gray-500">
+                              Полная база сотрудников с данными о должностях, отделах и карьерной истории.
+                          </dd>
+                      </div>
+                      <div class="relative">
+                          <dt>
+                              <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                                  <i class="fas fa-file-contract"></i>
+                              </div>
+                              <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Документооборот</p>
+                          </dt>
+                          <dd class="mt-2 ml-16 text-base text-gray-500">
+                              Автоматизация создания и учета кадровых документов.
+                          </dd>
+                      </div>
+                      <div class="relative">
+                          <dt>
+                              <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                                  <i class="fas fa-chart-line"></i>
+                              </div>
+                              <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Аналитика</p>
+                          </dt>
+                          <dd class="mt-2 ml-16 text-base text-gray-500">
+                              Отчеты и анализ эффективности персонала.
+                          </dd>
+                      </div>
+                      <div class="relative">
+                          <dt>
+                              <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                                  <i class="fas fa-calendar-alt"></i>
+                              </div>
+                              <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Планирование</p>
+                          </dt>
+                          <dd class="mt-2 ml-16 text-base text-gray-500">
+                              Управление графиками работы и отпусками.
+                          </dd>
+                      </div>
+                  </dl>
+              </div>
+          </div>
+      </div>
+
+      <!-- Основные разделы системы -->
+      <div class="py-12 bg-gray-50">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
+                  Основные разделы системы
+              </h2>
+              <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                  <div class="bg-white overflow-hidden shadow-card rounded-lg">
+                      <div class="p-6">
+                          <div class="flex items-center">
+                              <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+                                  <i class="fas fa-user-tie text-white text-xl"></i>
+                              </div>
+                              <div class="ml-4">
+                                  <h3 class="text-lg font-medium text-gray-900">Для HR-специалистов</h3>
+                              </div>
+                          </div>
+                          <div class="mt-4">
+                              <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                                  <li>Управление данными сотрудников</li>
+                                  <li>Создание документов</li>
+                                  <li>Планирование графиков</li>
+                                  <li>Организация найма</li>
+                              </ul>
+                              <div class="mt-5">
+                                  <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">
+                                      Подробнее <i class="fas fa-arrow-right ml-1"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="bg-white overflow-hidden shadow-card rounded-lg">
+                      <div class="p-6">
+                          <div class="flex items-center">
+                              <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+                                  <i class="fas fa-crown text-white text-xl"></i>
+                              </div>
+                              <div class="ml-4">
+                                  <h3 class="text-lg font-medium text-gray-900">Для руководителей</h3>
+                              </div>
+                          </div>
+                          <div class="mt-4">
+                              <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                                  <li>Аналитика персонала</li>
+                                  <li>Контроль эффективности</li>
+                                  <li>Управление структурой</li>
+                                  <li>Отслеживание KPI</li>
+                              </ul>
+                              <div class="mt-5">
+                                  <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">
+                                      Подробнее <i class="fas fa-arrow-right ml-1"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="bg-white overflow-hidden shadow-card rounded-lg">
+                      <div class="p-6">
+                          <div class="flex items-center">
+                              <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+                                  <i class="fas fa-user text-white text-xl"></i>
+                              </div>
+                              <div class="ml-4">
+                                  <h3 class="text-lg font-medium text-gray-900">Для сотрудников</h3>
+                              </div>
+                          </div>
+                          <div class="mt-4">
+                              <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                                  <li>Личный кабинет</li>
+                                  <li>Просмотр графиков</li>
+                                  <li>Подача заявлений</li>
+                                  <li>Расчетные листы</li>
+                              </ul>
+                              <div class="mt-5">
+                                  <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">
+                                      Подробнее <i class="fas fa-arrow-right ml-1"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Преимущества -->
+      <div class="py-12 bg-gray-50">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
+                  Преимущества системы
+              </h2>
+              <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                  <div class="bg-white overflow-hidden shadow-card rounded-lg p-6 text-center">
+                      <div class="flex justify-center mb-4">
+                          <i class="fas fa-clock text-4xl text-blue-500"></i>
+                      </div>
+                      <h3 class="text-xl font-bold text-gray-900 mb-2">Экономия времени</h3>
+                      <p class="text-gray-600">
+                          Автоматизация задач экономит до 50% времени HR-специалистов.
+                      </p>
+                  </div>
+                  <div class="bg-white overflow-hidden shadow-card rounded-lg p-6 text-center">
+                      <div class="flex justify-center mb-4">
+                          <i class="fas fa-chart-line text-4xl text-blue-500"></i>
+                      </div>
+                      <h3 class="text-xl font-bold text-gray-900 mb-2">Эффективность</h3>
+                      <p class="text-gray-600">
+                          Повышение производительности на 20%.
+                      </p>
+                  </div>
+                  <div class="bg-white overflow-hidden shadow-card rounded-lg p-6 text-center">
+                      <div class="flex justify-center mb-4">
+                          <i class="fas fa-check-circle text-4xl text-blue-500"></i>
+                      </div>
+                      <h3 class="text-xl font-bold text-gray-900 mb-2">Снижение ошибок</h3>
+                      <p class="text-gray-600">
+                          Автоматическая проверка данных сокращает ошибки на 90%.
+                      </p>
+                  </div>
+                  <div class="bg-white overflow-hidden shadow-card rounded-lg p-6 text-center">
+                      <div class="flex justify-center mb-4">
+                          <i class="fas fa-user-friends text-4xl text-blue-500"></i>
+                      </div>
+                      <h3 class="text-xl font-bold text-gray-900 mb-2">Удобство</h3>
+                      <p class="text-gray-600">
+                          Интуитивный интерфейс без длительного обучения.
+                      </p>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Контакты -->
+      <div class="py-12 bg-gray-50">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
+                  Свяжитесь с нами
+              </h2>
+              <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+                  <div>
+                      <h3 class="text-xl font-bold text-gray-900 mb-4">Контактная информация</h3>
+                      <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i> г. Москва, ул. Примерная, д. 1</p>
+                      <p class="text-gray-600 mb-2"><i class="fas fa-phone mr-2"></i> +7 (495) 123-45-67</p>
+                      <p class="text-gray-600 mb-2"><i class="fas fa-envelope mr-2"></i> info@hrsystem.ru</p>
+                  </div>
+                  <div class="mt-12 lg:mt-0">
+                      <form class="space-y-6">
+                          <div>
+                              <label for="name" class="block text-sm font-medium text-gray-700">Имя</label>
+                              <input type="text" id="name" name="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                          </div>
+                          <div>
+                              <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                              <input type="email" id="email" name="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                          </div>
+                          <div>
+                              <label for="message" class="block text-sm font-medium text-gray-700">Сообщение</label>
+                              <textarea id="message" name="message" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                          </div>
+                          <div>
+                              <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                  Отправить
+                              </button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <footer class="bg-gray-800 text-white py-8">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div>
+                      <h3 class="text-lg font-semibold mb-4">О системе</h3>
+                      <p class="text-gray-400">
+                          Современное решение для управления персоналом торговых фирм.
+                      </p>
+                  </div>
+                  <div>
+                      <h3 class="text-lg font-semibold mb-4">Ссылки</h3>
+                      <ul class="space-y-2">
+                          <li><a href="../index.html" class="text-gray-400 hover:text-white">Главная</a></li>
+                          <li><a href="../job/list.html" class="text-gray-400 hover:text-white">Вакансии</a></li>
+                          <li><a href="../auth/index.html" class="text-gray-400 hover:text-white">Авторизация</a></li>
+                      </ul>
+                  </div>
+                  <div>
+                      <h3 class="text-lg font-semibold mb-4">Контакты</h3>
+                      <p class="text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> г. Москва, ул. Примерная, д. 1</p>
+                      <p class="text-gray-400"><i class="fas fa-phone mr-2"></i> +7 (495) 123-45-67</p>
+                      <p class="text-gray-400"><i class="fas fa-envelope mr-2"></i> info@hrsystem.ru</p>
+                  </div>
+              </div>
+              <div class="mt-8 border-t border-gray-700 pt-8 text-center">
+                  <p class="text-gray-400">&copy; 2025 HRSystem. Все права защищены.</p>
+              </div>
+          </div>
+      </footer>
+
+  <!-- Скрипт переключения меню -->
+  <script src="../scripts/header.js"></script>
+</body>
+</html>
